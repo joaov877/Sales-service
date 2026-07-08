@@ -17,9 +17,11 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: '**/package-lock.json'
     
     - name: Install dependencies
-      run: npm ci
+      run: npm ci --prefer-offline --no-audit --no-fund
       working-directory: sales-service
     
     - name: Lint
@@ -27,7 +29,7 @@ jobs:
       working-directory: sales-service
     
     - name: Test
-      run: npm test || true
+      run: npm test -- --coverage || true
       working-directory: sales-service
     
     - name: Build
